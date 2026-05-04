@@ -1,222 +1,280 @@
-
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laptop Time</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACk0lEQVR4nO3SwU0DQRREQd8dBHkQgwMlFbIiAGhpD7D7jEuq60jT+u92f3uHH90u/wFZ4mASB5M4mMTBJA4mcTCJg0kcTOJgEgfToTg+Px78M+JgEgeTOJjEwSQOpj+M48grUsTBJA4mcTCJg0kcTOJgEgeTOJjEwSQOJnEwiYNJHEziYBIHkziYxMEkDiZxMImDSRxM4mASB5M4mMTBJA6mVhzfX/UjO/LnGnGIQxxXu/zS4hCHOMQhDnGIQxxR4hCHOK52+aXFIQ5xiEMc4hDHS8RxZmTXfunIE3GccYnCdnFUBLeLoyK4XRwVwe3iqAhuF0dFcLs4KoLbxVER3C6OiuB2cVQEt4ujIrhdHBXB7eKoCG4XR0VwuzgqgtvFURHcLo6K4HZxVAS3i6MiuF0cFcHt4qgIbhdHRXC7OCqC28VREdwujorgdnFUBLeLoyK4XRwVwe3iqAhuF0dFcLs4KoLbxVER3C6OiuB2cVQEt4ujIrhdHBXB7eKoCG4XR0VwuzgqgtvFURHcLo6K4HZxVAS3i6MiuF0cFcHt4qgIbhdHRXC7OCqC28VREdwujorgdnFUBLeLoyK4XRwVwe3iqAhuF0dFcLs4KoLbxVER3C6OiuB2cVQEt4ujIrhdHBXB7eKoCG4XR0VwuzgqgtvFURHcLo6K4Pbni+ME4hBH5QbiEIc4xCEOcYhDHOIQhzjEIQ5xiEMc4hCHOMQhjtzHWnGQIg4mcTCJg0kcTOJgEgeTOJjEwSQOJnEwiYNJHEziYBIHkziYxMEkDiZxMImDSRxM4mASB5M4mMTBJA4mcTCJg+m8OHh24mASB5M4mMTB9Gtx8JrEwSQOJnEwiYNJHEziYBIHkziYxMEkDiZxMH0BJclgET7pH2sAAAAASUVORK5CYII=">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Laptop Time">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-.wrap{padding:12px;background:#fff;font-family:'Calibri',sans-serif;}
-.title-bar{background:#0B1F3A;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:2px;}
-.title-main{color:#fff;font-size:17px;font-weight:700;letter-spacing:1px;}
-.title-sub{color:#C9A84C;font-size:10px;font-weight:600;letter-spacing:2px;}
-.gold-bar{height:3px;background:#C9A84C;margin-bottom:8px;}
-.tracker-wrap{overflow-x:auto;}
-table.main{border-collapse:collapse;width:100%;font-size:9px;}
+body{background:#0B1F3A;min-height:100vh;font-family:'Calibri',Arial,sans-serif;}
+#welcomeScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0B1F3A;padding:20px;}
+.welcome-card{background:#fff;border-radius:12px;padding:48px 40px;max-width:420px;width:100%;text-align:center;position:relative;overflow:hidden;}
+.welcome-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:#C9A84C;}
+.wc-logo{font-size:26px;font-weight:700;letter-spacing:2px;color:#0B1F3A;margin-bottom:4px;}
+.wc-logo span{color:#C9A84C;}
+.wc-sub{font-size:10px;color:#AABBCC;letter-spacing:2px;font-weight:600;margin-bottom:32px;}
+.wc-title{font-size:22px;font-weight:700;color:#0B1F3A;margin-bottom:8px;line-height:1.3;}
+.wc-desc{font-size:12px;color:#667788;margin-bottom:32px;line-height:1.6;}
+.wc-select-lbl{font-size:11px;color:#AABBCC;letter-spacing:0.5px;margin-bottom:14px;}
+.wc-members{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.wc-member{background:#0B1F3A;color:#E8C97A;border:1.5px solid #C9A84C;border-radius:8px;padding:13px 20px;font-size:15px;font-weight:700;cursor:pointer;transition:background 0.18s;letter-spacing:0.5px;}
+.wc-member:hover{background:#122848;}
+.wc-member:active{transform:scale(0.98);}
+.wc-footer{font-size:9px;color:#CCCCCC;}
+#appScreen{display:none;background:#f0f0f0;min-height:100vh;padding:14px;}
+.app{background:#fff;width:100%;max-width:1100px;margin:0 auto;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,0.1);overflow:hidden;}
+.title-bar{background:#0B1F3A;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;}
+.title-main{color:#fff;font-size:15px;font-weight:700;letter-spacing:1px;}
+.title-sub{color:#C9A84C;font-size:9px;font-weight:600;letter-spacing:1.5px;}
+.welcome-badge{background:#C9A84C;color:#0B1F3A;font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.5px;}
+.gold-bar{height:3px;background:#C9A84C;}
+.app-inner{padding:10px;}
+.nav{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.nav-btn{background:#0B1F3A;color:#E8C97A;border:none;padding:5px 14px;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:0.5px;border-radius:3px;}
+.nav-btn:hover{background:#122848;}
+.nav-btn.sec{background:transparent;color:#0B1F3A;border:1px solid #C9A84C66;font-size:9px;}
+.nav-btn.sec:hover{background:#F5E9C8;}
+.nav-btn.logout{background:transparent;color:#AABBCC;border:1px solid #DDDDDD;font-size:9px;}
+.nav-btn.logout:hover{background:#FFF0F0;color:#cc4444;border-color:#cc4444;}
+.period-label{font-size:10px;color:#0B1F3A;font-weight:700;background:#F5E9C8;padding:3px 10px;border-radius:2px;border:0.5px solid #C9A84C44;}
+table.main{border-collapse:collapse;width:100%;font-size:8px;table-layout:fixed;}
 table.main th,table.main td{border:0.5px solid #C9A84C33;text-align:center;padding:0;}
-.col-name{width:62px;background:#0B1F3A;color:#E8C97A;font-size:9px;font-weight:700;letter-spacing:0.5px;padding:5px 4px;text-align:left;padding-left:7px;}
-.col-name-body{width:62px;background:#EEF2F7;color:#0B1F3A;font-size:10px;font-weight:700;padding:8px 4px 8px 7px;text-align:left;border-bottom:0.5px solid #C9A84C44;}
-.hdr-week{background:#0B1F3A;color:#C9A84C;font-size:8px;font-weight:700;letter-spacing:0.8px;padding:3px 1px;}
-.hdr-day{font-size:8px;font-weight:600;padding:2px 1px;line-height:1.2;}
+.col-name{width:58px;background:#0B1F3A;color:#E8C97A;font-size:8px;font-weight:700;padding:4px 6px;text-align:left;}
+.col-name-body{width:58px;background:#EEF2F7;color:#0B1F3A;font-size:9px;font-weight:700;padding:7px 3px 7px 6px;text-align:left;border-bottom:0.5px solid #C9A84C44;}
+.hdr-week{background:#0B1F3A;color:#C9A84C;font-size:7px;font-weight:700;letter-spacing:0.8px;padding:3px 1px;}
+.hdr-day{font-size:7px;font-weight:600;padding:2px 1px;line-height:1.3;}
 .hdr-day.wd{background:#122848;color:#E8C97A;}
 .hdr-day.we{background:#1A3560;color:#C9A84C;}
-.hdr-date{font-size:7px;padding:2px 0px;}
+.hdr-date{font-size:6.5px;padding:2px 0;}
 .hdr-date.wd{background:#1A3560;color:#AABBCC;}
-.hdr-date.we{background:#0B1F3A;color:#C9A84C88;}
-.cell-check{height:30px;cursor:pointer;}
+.hdr-date.we{background:#0B1F3A;color:#C9A84C;}
+.cell-check{height:28px;cursor:pointer;}
 .cell-check.even{background:#F8FAFC;}
 .cell-check.we-cell{background:#F5E9C822;}
-.chk{width:14px;height:14px;border:1.2px solid #C9A84C;border-radius:2px;margin:auto;cursor:pointer;display:flex;align-items:center;justify-content:center;background:#fff;transition:background 0.12s;}
-.chk.checked{background:#C9A84C;border-color:#C9A84C;}
-.chk.checked::after{content:'';display:block;width:4px;height:7px;border:1.5px solid #0B1F3A;border-top:none;border-left:none;transform:rotate(45deg);margin-top:-2px;}
+.chk{width:14px;height:14px;border:1.2px solid #C9A84C;border-radius:2px;margin:auto;cursor:pointer;display:flex;align-items:center;justify-content:center;background:#fff;transition:background 0.1s;}
+.chk.done{background:#C9A84C;border-color:#C9A84C;}
+.chk.done::after{content:'';display:block;width:4px;height:7px;border:1.5px solid #0B1F3A;border-top:none;border-left:none;transform:rotate(45deg);margin-top:-2px;}
 .chk.we-chk{border-color:#C9A84C66;}
-.total-col{width:28px;background:#0B1F3A22;color:#0B1F3A;font-weight:700;font-size:10px;}
-.total-hdr{background:#C9A84C;color:#0B1F3A;font-size:8px;font-weight:700;padding:3px 1px;letter-spacing:0.5px;}
+.total-col{width:26px;background:#C9A84C22;color:#0B1F3A;font-weight:700;font-size:9px;}
+.total-hdr{background:#C9A84C;color:#0B1F3A;font-size:7px;font-weight:700;padding:3px 1px;}
 .week-sep{border-left:2px solid #C9A84C!important;}
-.bottom{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
-.section{border:0.5px solid #C9A84C44;border-radius:4px;overflow:hidden;}
-.sec-hdr{background:#0B1F3A;color:#E8C97A;font-size:8px;font-weight:700;letter-spacing:1.5px;padding:4px 8px;}
+.bottom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+@media(max-width:600px){.bottom{grid-template-columns:1fr;}}
+.section{border:0.5px solid #C9A84C44;border-radius:3px;overflow:hidden;}
+.sec-hdr{background:#0B1F3A;color:#E8C97A;font-size:7.5px;font-weight:700;letter-spacing:1.5px;padding:4px 7px;}
 .sec-body{padding:7px;background:#F8FAFC;}
-.fund-table{width:100%;border-collapse:collapse;font-size:9px;}
-.fund-table td,.fund-table th{border:0.5px solid #C9A84C33;padding:3px 5px;}
-.fund-table th{background:#122848;color:#E8C97A;font-size:8px;font-weight:700;}
+.fund-table{width:100%;border-collapse:collapse;font-size:8.5px;}
+.fund-table td,.fund-table th{border:0.5px solid #C9A84C33;padding:3px 4px;}
+.fund-table th{background:#122848;color:#E8C97A;font-size:7.5px;font-weight:700;}
 .fund-table tr:nth-child(even) td{background:#EEF2F7;}
-.fund-input{border:none;background:transparent;width:100%;font-size:9px;color:#0B1F3A;text-align:center;outline:none;}
-.fund-input::placeholder{color:#BBCCDD;}
-.obs-area{width:100%;border:0.5px solid #C9A84C44;border-radius:3px;font-size:9px;color:#0B1F3A;padding:4px;resize:none;height:48px;font-family:'Calibri',sans-serif;background:#fff;outline:none;}
-.obs-area:focus{border-color:#C9A84C;}
-.obs-lbl{font-size:8px;font-weight:700;color:#0B1F3A;margin-bottom:2px;margin-top:5px;}
+.fi{border:none;background:transparent;width:100%;font-size:8.5px;color:#0B1F3A;text-align:center;outline:none;font-family:inherit;}
+.fi::placeholder{color:#BBCCDD;}
+.obs-lbl{font-size:7.5px;font-weight:700;color:#0B1F3A;margin-bottom:2px;margin-top:5px;}
+.obs-lbl:first-child{margin-top:0;}
+.obs-ta{width:100%;border:0.5px solid #C9A84C44;border-radius:2px;font-size:8.5px;color:#0B1F3A;padding:4px;resize:none;height:42px;font-family:inherit;background:#fff;outline:none;}
+.obs-ta:focus{border-color:#C9A84C;}
+.obs-ta.short{height:28px;}
+.streak-bar{display:flex;gap:3px;margin-top:5px;flex-wrap:wrap;}
+.streak-dot{width:9px;height:9px;border-radius:50%;background:#EEF2F7;border:0.5px solid #C9A84C44;}
+.streak-dot.on{background:#C9A84C;}
+.toast{position:fixed;bottom:14px;right:14px;background:#0B1F3A;color:#E8C97A;font-size:10px;padding:6px 14px;border-radius:4px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;}
+.toast.show{opacity:1;}
+.tot-row-cell{background:#0B1F3A22;font-size:8px;font-weight:700;color:#0B1F3A;padding:2px;}
+.grand-cell{background:#C9A84C;color:#0B1F3A;font-weight:700;font-size:9px;}
+.stat-row{display:flex;gap:8px;flex-wrap:wrap;}
+.stat{background:#F5E9C8;border:0.5px solid #C9A84C44;border-radius:3px;padding:3px 10px;font-size:8px;color:#0B1F3A;}
+.stat span{font-weight:700;color:#C9A84C;font-size:11px;}
 </style>
+</head>
+<body>
 
-<div class="wrap">
-<h2 class="sr-only">Laptop Time — Almanaque familiar 4 semanas, del 27 de abril al 24 de mayo 2026</h2>
-
-<div class="title-bar">
-  <span class="title-main">LAPTOP TIME</span>
-  <span class="title-sub">Laboratorio Familiar · Tracker de Hábitos · 4 Semanas</span>
-</div>
-<div class="gold-bar"></div>
-
-<div class="tracker-wrap">
-<table class="main" id="mainTable">
-<thead>
-<tr id="weekRow">
-  <th class="col-name" rowspan="3">NOMBRE</th>
-</tr>
-<tr id="dayRow"></tr>
-<tr id="dateRow"></tr>
-</thead>
-<tbody id="tableBody"></tbody>
-</table>
-</div>
-
-<div class="bottom">
-  <div class="section">
-    <div class="sec-hdr">FONDO FAMILIAR DE INVERSION</div>
-    <div class="sec-body">
-      <table class="fund-table">
-        <tr><th>Semana</th><th>Dias cumplidos</th><th>Aportado</th><th>Acumulado</th></tr>
-        <tr><td>Sem 1</td><td><input class="fund-input" placeholder="__ / 7"></td><td><input class="fund-input" placeholder="$0"></td><td><input class="fund-input" placeholder="$0"></td></tr>
-        <tr><td>Sem 2</td><td><input class="fund-input" placeholder="__ / 7"></td><td><input class="fund-input" placeholder="$0"></td><td><input class="fund-input" placeholder="$0"></td></tr>
-        <tr><td>Sem 3</td><td><input class="fund-input" placeholder="__ / 7"></td><td><input class="fund-input" placeholder="$0"></td><td><input class="fund-input" placeholder="$0"></td></tr>
-        <tr><td>Sem 4</td><td><input class="fund-input" placeholder="__ / 7"></td><td><input class="fund-input" placeholder="$0"></td><td><input class="fund-input" placeholder="$0"></td></tr>
-        <tr style="background:#EEF2F7"><td colspan="2" style="font-weight:700;color:#0B1F3A;font-size:9px;">TOTAL DEL MES</td><td><input class="fund-input" style="font-weight:700;color:#C9A84C;" placeholder="$0"></td><td><input class="fund-input" style="font-weight:700;color:#0B1F3A;" placeholder="$0"></td></tr>
-      </table>
-      <div style="margin-top:5px;font-size:8px;color:#667788;text-align:center;">Meta 10% de ganancia: <b style="color:#C9A84C;">celebramos juntos</b></div>
+<div id="welcomeScreen">
+  <div class="welcome-card">
+    <div class="wc-logo">LAPTOP <span>TIME</span></div>
+    <div class="wc-sub">LABORATORIO FAMILIAR · TRACKER DE HÁBITOS</div>
+    <div class="wc-title">El futuro se construye<br>todos los días.</div>
+    <div class="wc-desc">Registra tu progreso, celebra cada día cumplido<br>y construye el hábito más poderoso de tu familia.</div>
+    <div class="wc-select-lbl">¿Quién eres hoy?</div>
+    <div class="wc-members">
+      <div class="wc-member" onclick="enterApp('Julio')">Julio</div>
+      <div class="wc-member" onclick="enterApp('Yaluz')">Yaluz</div>
+      <div class="wc-member" onclick="enterApp('Carlos E.')">Carlos E.</div>
     </div>
-  </div>
-
-  <div class="section">
-    <div class="sec-hdr">OBSERVACIONES DEL MES</div>
-    <div class="sec-body">
-      <div class="obs-lbl" style="margin-top:0">Lo que mas nos gusto:</div>
-      <textarea class="obs-area" placeholder="Escribe aqui..."></textarea>
-      <div class="obs-lbl">Lo que mejoraremos:</div>
-      <textarea class="obs-area" placeholder="Escribe aqui..."></textarea>
-      <div class="obs-lbl">Proxima sesion — tema:</div>
-      <textarea class="obs-area" style="height:32px;" placeholder="Escribe aqui..."></textarea>
-    </div>
+    <div class="wc-footer">Laptop Time · Laboratorio Familiar de Riqueza &amp; Tecnología</div>
   </div>
 </div>
+
+<div id="appScreen">
+  <div class="app">
+    <div class="title-bar">
+      <div>
+        <div class="title-main">LAPTOP TIME</div>
+        <div class="title-sub">Laboratorio Familiar · Tracker de Hábitos</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <div class="welcome-badge" id="welcomeBadge"></div>
+        <button class="nav-btn logout" onclick="logout()">Salir</button>
+      </div>
+    </div>
+    <div class="gold-bar"></div>
+    <div class="app-inner">
+      <div class="nav">
+        <button class="nav-btn" onclick="changePeriod(-1)">← Anterior</button>
+        <span class="period-label" id="periodLabel"></span>
+        <button class="nav-btn" onclick="changePeriod(1)">Siguiente →</button>
+        <span style="flex:1"></span>
+        <div class="stat-row">
+          <div class="stat">Días: <span id="statDias">0</span></div>
+          <div class="stat">Racha: <span id="statRacha">0</span></div>
+        </div>
+        <button class="nav-btn sec" onclick="saveAll()">Guardar</button>
+        <button class="nav-btn sec" onclick="clearPeriod()">Limpiar</button>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="main" id="mainTable">
+          <thead>
+            <tr id="weekRow"><th class="col-name" rowspan="3">NOMBRE</th></tr>
+            <tr id="dayRow"></tr>
+            <tr id="dateRow"></tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+      <div class="bottom">
+        <div class="section">
+          <div class="sec-hdr">FONDO FAMILIAR DE INVERSION</div>
+          <div class="sec-body">
+            <table class="fund-table" id="fundTable">
+              <tr><th>Semana</th><th>Días cumplidos</th><th>Aportado</th><th>Acumulado</th></tr>
+            </table>
+            <div style="margin-top:5px;font-size:7.5px;color:#667788;text-align:center;">Meta 10% de ganancia: <b style="color:#C9A84C;">celebramos juntos</b></div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="sec-hdr">OBSERVACIONES DEL MES</div>
+          <div class="sec-body">
+            <div class="obs-lbl">Lo que mas nos gusto:</div>
+            <textarea class="obs-ta" id="obs1" placeholder="Escribe aqui..."></textarea>
+            <div class="obs-lbl">Lo que mejoraremos:</div>
+            <textarea class="obs-ta" id="obs2" placeholder="Escribe aqui..."></textarea>
+            <div class="obs-lbl">Proxima sesion — tema:</div>
+            <textarea class="obs-ta short" id="obs3" placeholder="Escribe aqui..."></textarea>
+            <div class="obs-lbl" style="margin-top:7px;">Racha del periodo:</div>
+            <div class="streak-bar" id="streakBar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div class="toast" id="toast">✓ Guardado</div>
 
 <script>
-const NAMES = ['Julio','Yaluz','Carlos E.'];
-const DAY_LABELS = ['L','M','M','J','V','S','D'];
-const DAY_NAMES  = ['Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
-const IS_WE = [false,false,false,false,false,true,true];
+const NAMES=['Julio','Yaluz','Carlos E.'];
+const DN=['Lun','Mar','Mie','Jue','Vie','Sab','Dom'];
+const MS=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+let periodOffset=0,currentData={checks:{},fund:{},obs:{}},autoTimer=null,currentUser='';
 
-const start = new Date(2026,3,27);
-const allDates = [];
-for(let w=0;w<4;w++){
-  for(let d=0;d<7;d++){
-    const dt=new Date(start);
-    dt.setDate(start.getDate()+w*7+d);
-    allDates.push({date:dt,we:d>=5,weekIdx:w});
-  }
+function enterApp(name){
+  currentUser=name;
+  localStorage.setItem('lt_user',name);
+  document.getElementById('welcomeBadge').textContent='Bienvenido, '+name+' · Registra tu progreso';
+  document.getElementById('welcomeScreen').style.display='none';
+  document.getElementById('appScreen').style.display='block';
+  periodOffset=0;currentData=load(0);buildTable(0);
 }
-
-function fmt(dt){
-  return (dt.getMonth()+1).toString().padStart(2,'0')+'/'+dt.getDate().toString().padStart(2,'0');
+function logout(){
+  localStorage.removeItem('lt_user');
+  document.getElementById('appScreen').style.display='none';
+  document.getElementById('welcomeScreen').style.display='flex';
 }
+function getPeriodStart(o){const b=new Date(2026,3,27);b.setDate(b.getDate()+o*28);return b;}
+function getPeriodDates(o){const s=getPeriodStart(o);return Array.from({length:28},(_,i)=>{const d=new Date(s);d.setDate(s.getDate()+i);return d;});}
+function fmt(d){return (d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getDate().toString().padStart(2,'0');}
+function periodKey(o){const s=getPeriodStart(o);return 'lt2_'+s.getFullYear()+'_'+s.getMonth()+'_'+s.getDate();}
+function load(o){try{const r=localStorage.getItem(periodKey(o));return r?JSON.parse(r):{checks:{},fund:{},obs:{}};}catch(e){return {checks:{},fund:{},obs:{}};}}
+function save(o,d){try{localStorage.setItem(periodKey(o),JSON.stringify(d));}catch(e){}}
+function buildLabel(o){const d=getPeriodDates(o);const s=d[0],e=d[27];return s.getDate()+' '+MS[s.getMonth()]+' — '+e.getDate()+' '+MS[e.getMonth()]+' '+e.getFullYear();}
 
-// Week header row
-const weekRow = document.getElementById('weekRow');
-[0,1,2,3].forEach(w=>{
-  const th=document.createElement('th');
-  th.className='hdr-week week-sep';
-  th.colSpan=7;
-  th.textContent='SEMANA '+(w+1);
-  weekRow.appendChild(th);
-});
-const totHdr=document.createElement('th');
-totHdr.className='total-hdr';
-totHdr.rowSpan=3;
-totHdr.textContent='TOTAL';
-weekRow.appendChild(totHdr);
-
-// Day name row
-const dayRow=document.getElementById('dayRow');
-allDates.forEach((item,i)=>{
-  const th=document.createElement('th');
-  th.className='hdr-day '+(item.we?'we':'wd');
-  if(i%7===0) th.classList.add('week-sep');
-  th.textContent=DAY_NAMES[i%7];
-  dayRow.appendChild(th);
-});
-
-// Date row
-const dateRow=document.getElementById('dateRow');
-allDates.forEach((item,i)=>{
-  const th=document.createElement('th');
-  th.className='hdr-date '+(item.we?'we':'wd');
-  if(i%7===0) th.classList.add('week-sep');
-  th.textContent=fmt(item.date);
-  dateRow.appendChild(th);
-});
-
-// Body rows
-const tbody=document.getElementById('tableBody');
-const state={};
-NAMES.forEach((name,ni)=>{
-  state[name]={};
-  const tr=document.createElement('tr');
-  const nc=document.createElement('td');
-  nc.className='col-name-body';
-  nc.textContent=name;
-  tr.appendChild(nc);
-  allDates.forEach((item,ci)=>{
-    const td=document.createElement('td');
-    td.className='cell-check'+(ci%2===0?' even':'')+(item.we?' we-cell':'');
-    if(ci%7===0) td.style.borderLeft='2px solid #C9A84C';
-    const box=document.createElement('div');
-    box.className='chk'+(item.we?' we-chk':'');
-    box.onclick=()=>{
-      state[name][ci]=!state[name][ci];
-      box.classList.toggle('checked',state[name][ci]);
-      updateTotals();
-    };
-    td.appendChild(box);
-    tr.appendChild(td);
+function buildTable(o){
+  const dates=getPeriodDates(o);
+  const wr=document.getElementById('weekRow'),dr=document.getElementById('dayRow'),dtr=document.getElementById('dateRow'),tb=document.getElementById('tableBody');
+  while(wr.children.length>1)wr.removeChild(wr.lastChild);
+  dr.innerHTML='';dtr.innerHTML='';tb.innerHTML='';
+  for(let w=0;w<4;w++){const th=document.createElement('th');th.className='hdr-week week-sep';th.colSpan=7;th.textContent='SEMANA '+(w+1);wr.appendChild(th);}
+  const tH=document.createElement('th');tH.className='total-hdr';tH.rowSpan=3;tH.textContent='TOTAL';wr.appendChild(tH);
+  dates.forEach((d,i)=>{
+    const we=i%7>=5;
+    const th1=document.createElement('th');th1.className='hdr-day '+(we?'we':'wd');if(i%7===0)th1.classList.add('week-sep');th1.textContent=DN[i%7];dr.appendChild(th1);
+    const th2=document.createElement('th');th2.className='hdr-date '+(we?'we':'wd');if(i%7===0)th2.classList.add('week-sep');th2.textContent=fmt(d);dtr.appendChild(th2);
   });
-  const totTd=document.createElement('td');
-  totTd.className='total-col';
-  totTd.id='tot_'+name;
-  totTd.textContent='0';
-  tr.appendChild(totTd);
-  tbody.appendChild(tr);
-});
-
-// Total day row
-const totRow=document.createElement('tr');
-const totLbl=document.createElement('td');
-totLbl.className='col-name';
-totLbl.style.fontSize='7px';
-totLbl.textContent='TOTAL DIA';
-totRow.appendChild(totLbl);
-allDates.forEach((_,ci)=>{
-  const td=document.createElement('td');
-  td.id='col_'+ci;
-  td.style.cssText='background:#0B1F3A22;font-size:9px;font-weight:700;color:#0B1F3A;padding:2px;';
-  if(ci%7===0) td.style.borderLeft='2px solid #C9A84C';
-  td.textContent='0';
-  totRow.appendChild(td);
-});
-const grandTd=document.createElement('td');
-grandTd.id='grandTotal';
-grandTd.style.cssText='background:#C9A84C;color:#0B1F3A;font-weight:700;font-size:10px;';
-grandTd.textContent='0';
-totRow.appendChild(grandTd);
-tbody.appendChild(totRow);
+  NAMES.forEach(name=>{
+    if(!currentData.checks[name])currentData.checks[name]={};
+    const tr=document.createElement('tr');
+    const nc=document.createElement('td');nc.className='col-name-body';nc.textContent=name;tr.appendChild(nc);
+    dates.forEach((d,ci)=>{
+      const we=ci%7>=5;
+      const td=document.createElement('td');td.className='cell-check'+(ci%2===0?' even':'')+(we?' we-cell':'');if(ci%7===0)td.style.borderLeft='2px solid #C9A84C';
+      const box=document.createElement('div');box.className='chk'+(we?' we-chk':'');
+      if(currentData.checks[name][ci])box.classList.add('done');
+      box.onclick=()=>{currentData.checks[name][ci]=!currentData.checks[name][ci];box.classList.toggle('done',currentData.checks[name][ci]);updateTotals();autoSave();};
+      td.appendChild(box);tr.appendChild(td);
+    });
+    const tot=document.createElement('td');tot.className='total-col';tot.id='tot_'+name;tot.textContent='0';tr.appendChild(tot);tb.appendChild(tr);
+  });
+  const totRow=document.createElement('tr');
+  const tl=document.createElement('td');tl.className='col-name';tl.style.fontSize='6.5px';tl.textContent='TOTAL DIA';totRow.appendChild(tl);
+  dates.forEach((_,ci)=>{const td=document.createElement('td');td.id='col_'+ci;td.className='tot-row-cell';if(ci%7===0)td.style.borderLeft='2px solid #C9A84C';td.textContent='0';totRow.appendChild(td);});
+  const gTd=document.createElement('td');gTd.id='grandTotal';gTd.className='grand-cell';gTd.textContent='0';totRow.appendChild(gTd);tb.appendChild(totRow);
+  buildFund();loadObs();updateTotals();
+  document.getElementById('periodLabel').textContent=buildLabel(o);
+}
 
 function updateTotals(){
-  let grand=0;
-  allDates.forEach((_,ci)=>{
-    let col=0;
-    NAMES.forEach(n=>{col+=state[n][ci]?1:0;});
-    document.getElementById('col_'+ci).textContent=col;
-    grand+=col;
-  });
-  NAMES.forEach(n=>{
-    let row=0;
-    allDates.forEach((_,ci)=>{row+=state[n][ci]?1:0;});
-    document.getElementById('tot_'+n).textContent=row;
-  });
-  document.getElementById('grandTotal').textContent=grand;
+  let grand=0,racha=0,maxRacha=0;
+  for(let ci=0;ci<28;ci++){
+    let col=0;NAMES.forEach(n=>{col+=(currentData.checks[n]&&currentData.checks[n][ci])?1:0;});
+    const el=document.getElementById('col_'+ci);if(el)el.textContent=col;grand+=col;
+    if(col>0){racha++;maxRacha=Math.max(maxRacha,racha);}else racha=0;
+  }
+  NAMES.forEach(n=>{let r=0;for(let ci=0;ci<28;ci++)r+=(currentData.checks[n]&&currentData.checks[n][ci])?1:0;const el=document.getElementById('tot_'+n);if(el)el.textContent=r;});
+  const g=document.getElementById('grandTotal');if(g)g.textContent=grand;
+  const sd=document.getElementById('statDias');if(sd)sd.textContent=grand;
+  const sr=document.getElementById('statRacha');if(sr)sr.textContent=maxRacha;
+  buildStreak();
 }
+function buildFund(){
+  const ft=document.getElementById('fundTable');while(ft.rows.length>1)ft.deleteRow(1);if(!currentData.fund)currentData.fund={};
+  ['Sem 1','Sem 2','Sem 3','Sem 4'].forEach((lbl,ri)=>{
+    const k='f'+ri;if(!currentData.fund[k])currentData.fund[k]={dias:'',ap:'',ac:''};
+    const tr=ft.insertRow();const c0=tr.insertCell();c0.textContent=lbl;c0.style.cssText='font-size:8.5px;font-weight:700;color:#0B1F3A;text-align:center;padding:3px 4px;';
+    [{f:'dias',ph:'__ / 7'},{f:'ap',ph:'$0'},{f:'ac',ph:'$0'}].forEach(({f,ph})=>{const td=tr.insertCell();const inp=document.createElement('input');inp.className='fi';inp.type='text';inp.placeholder=ph;inp.value=currentData.fund[k][f]||'';inp.oninput=()=>{currentData.fund[k][f]=inp.value;autoSave();};td.appendChild(inp);});
+    if(ri%2===0)[...tr.cells].forEach(c=>c.style.background='#F8FAFC');
+  });
+  const trT=ft.insertRow();trT.style.background='#EEF2F7';const tdl=trT.insertCell();tdl.colSpan=2;tdl.style.cssText='font-weight:700;color:#0B1F3A;font-size:8.5px;padding:3px 4px;';tdl.textContent='TOTAL DEL MES';
+  if(!currentData.fund.total)currentData.fund.total={ap:'',ac:''};
+  [{f:'ap',c:'#C9A84C'},{f:'ac',c:'#0B1F3A'}].forEach(({f,c})=>{const td=trT.insertCell();const inp=document.createElement('input');inp.className='fi';inp.style.fontWeight='700';inp.style.color=c;inp.type='text';inp.placeholder='$0';inp.value=currentData.fund.total[f]||'';inp.oninput=()=>{currentData.fund.total[f]=inp.value;autoSave();};td.appendChild(inp);});
+}
+function loadObs(){
+  const obs=currentData.obs||{};
+  ['obs1','obs2','obs3'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.value=obs[id]||'';el.oninput=()=>{if(!currentData.obs)currentData.obs={};currentData.obs[id]=el.value;autoSave();};});
+}
+function buildStreak(){
+  const bar=document.getElementById('streakBar');if(!bar)return;bar.innerHTML='';
+  for(let ci=0;ci<28;ci++){const any=NAMES.some(n=>currentData.checks[n]&&currentData.checks[n][ci]);const dot=document.createElement('div');dot.className='streak-dot'+(any?' on':'');bar.appendChild(dot);}
+}
+function autoSave(){clearTimeout(autoTimer);autoTimer=setTimeout(()=>save(periodOffset,currentData),600);}
+function saveAll(){save(periodOffset,currentData);const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
+function changePeriod(dir){save(periodOffset,currentData);periodOffset+=dir;currentData=load(periodOffset);buildTable(periodOffset);}
+function clearPeriod(){if(confirm('Borrar todos los datos de este periodo?')){currentData={checks:{},fund:{},obs:{}};save(periodOffset,currentData);buildTable(periodOffset);}}
+
+const saved=localStorage.getItem('lt_user');
+if(saved)enterApp(saved);
 </script>
+</body>
+</html>
